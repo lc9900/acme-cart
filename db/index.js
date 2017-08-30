@@ -1,6 +1,9 @@
 const db = require('./conn.js');
 const Sequelize = db.Sequelize;
 const utils = require('../utils');
+const Product = require('./Product');
+const Order = require('./Order');
+const LineItem = require('./LineItem');
 
 function sync () {
     return db.sync({force:true})
