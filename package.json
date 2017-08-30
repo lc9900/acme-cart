@@ -1,0 +1,24 @@
+{
+  "name": "20-acme-cart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "DATABASE_URL=postgres://localhost/acmecart_db nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
+    "chalk": "^2.1.0",
+    "express": "^4.15.4",
+    "jquery": "^3.2.1",
+    "method-override": "^2.3.9",
+    "nunjucks": "^3.0.1",
+    "path": "^0.12.7",
+    "pg": "^7.2.0",
+    "sequelize": "^4.8.0"
+  }
+}
