@@ -1,5 +1,72 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>Index.html Here</h1>
+    <div class='col-sm-8'>
+        <h3>Products</h3>
+        <ul class='list-group'>
+            {% for product in productSection.products %}
+                <li class='list-group-item'>
+                    <form action="/orders/{{productSection.orderId}}/lineItems" method="POST">
+                        {{product.name}}
+                        <button class='btn btn-primary pull-right'>Add to Cart</button>
+                        <input type='hidden' value='{{product.id}}' name='productId'>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class='col-sm-4'>
+        {% if cart.lineItems.length > 0 %}
+
+                <h3>Your Cart</h3>
+                {% if error%}
+                    <div class='alert alert-danger'>address required</div>
+                {% endif %}
+                <div class='well'>
+                    <ul class='list-group'>
+                        {% for item in cart.lineItems %}
+                        <li class='list-group-item'>
+                            {{item.product.name}}
+                            <span class='label label-default pull-right'>{{item.quantity}}</span>
+                            <form action='/orders/{{cart.orderId}}/lineItems/{{item.id}}?_method=DELETE' method='POST'>
+                                <button class='btn btn-warning'>Remove From Cart</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <form action='/orders/{{cart.orderId}}?_method=PUT' method='POST'>
+                        <input type='hidden' name='isCart' value='false'>
+                        <hr>
+                        <div class='form-group'>
+                            <label>Address</label>
+                            <input class='form-control' name='address'>
+                        </div>
+                        <button class='btn btn-primary'>Place Order</button>
+                    </form>
+                </div>
+
+        {% endif %}
+
+        {% if completedOrders.length > 0 %}
+            <h3>Your Orders</h3>
+            <ul class='list-group'>
+                {% for order in completedOrders %}
+                    <li class='list-group-item'>
+                        Order: {{order.id}} {{order.address}}
+                        <ul class='list-group'>
+                            {% for item in order.lineitems %}
+                                <li class='list-group-item'>
+                                    {{item.product.name}}
+                                    <span class='label label-default pull-right'>{{item.quantity}}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    </div>
 {% endblock %}

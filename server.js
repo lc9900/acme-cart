@@ -29,8 +29,12 @@ app.listen(3000, () => {
 
 
 
-app.get('/', (req, res) => {
-    res.render('index');
+app.get('/', (req, res, next) => {
+    db.generateView()
+        .then((resultView) => {
+            res.render('index', resultView);
+        }).catch(next);
+
 })
 
 app.use('/orders', orderRouter);

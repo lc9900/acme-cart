@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Order = require('./db/Order');
+const Order = require('../db/Order');
 
 module.exports = router;
 
