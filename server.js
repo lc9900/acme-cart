@@ -24,7 +24,7 @@ var port = process.env.PORT || 3000;
 
 app.listen(3000, () => {
     utils.inform('Webserver is listening on port ' + port);
-    db.sync(); // Failure in db sync doesn't need to be reflected into the error.html since it's strictly backend
+    db.syncAndSeed(); // Failure in db sync doesn't need to be reflected into the error.html since it's strictly backend
 });
 
 
