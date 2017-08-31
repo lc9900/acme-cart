@@ -1,13 +1,7 @@
 const router = require('express').Router();
 const Order = require('../db/Order');
-
+const db = require('../db');
 module.exports = router;
-
-
-// const { Order } = require('../db').models;
-// const app = require('express').Router();
-
-// module.exports = app;
 
 
 // Place Order
@@ -15,8 +9,18 @@ router.put('/:id', (req, res, next)=> {
   Order.updateFromRequestBody(req.params.id*1, req.body)
     .then( () => res.redirect('/'))
     .catch(ex => {
+        // console.log('In put catch');
+        // console.log(ex.message)
       if(ex.message === 'address required'){
-        return res.render('index', { error: ex });
+        // console.log('inside the if')
+        // return res.render('index', { error: ex });
+        // return res.redirect('/')
+        // return res.render('index', {});
+        return db.generateView()
+                .then((resultView) => {
+                    resultView.error = ex.message;
+                    res.render('index', resultView);
+                }).catch(next);
       }
       next(ex);
     });

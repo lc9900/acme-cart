@@ -29,12 +29,15 @@ Order.updateFromRequestBody = function (orderId, orderContent) {
             id: orderId
         }
     }).then(order => {
+        utils.inform("Updating order");
         return order.update(orderContent);
     })
     .then(() => {
+        utils.inform("Creating new cart");
         return Order.create({});
     })
     .catch(err => {
+        utils.inform("Error caught");
         if(err.message.includes('notEmpty')) throw new TypeError('address required');
         else throw err;
     })
